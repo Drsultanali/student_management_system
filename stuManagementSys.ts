@@ -3,7 +3,7 @@ import inquirer from 'inquirer';
 class Student {
     private static idCounter: number = 1;
 
-    readonly id: number;
+    readonly id: number;                                              
     readonly name: string;
     private enrolledCourses: Course[] = [];
 
@@ -14,14 +14,14 @@ class Student {
 
     enroll(course: Course): void {
         this.enrolledCourses.push(course);
-        console.log(`${this.name} is enrolled in ${course.name}.`);
+       // console.log(`${this.name} is enrolled in ${course.name}.`);
     }
 
     displayCourses(): void {
         if (this.enrolledCourses.length > 0) {
-            console.log(`${this.name}'s enrolled courses:`);
+            //console.log(`${this.name}'s enrolled courses:`);
             this.enrolledCourses.forEach((course) => {
-                console.log(`- ${course.name}`);
+                console.log(` ${course.name}`);
             });
         } else {
             console.log(`${this.name} is not enrolled in any courses.`);
@@ -66,7 +66,14 @@ class StudentManagementSystem {
             console.log(`Course: ${course.name}`);
         });
     }
-
+    displayEnrolledStudents(): void {
+        console.log('List of Enrolled Students:');
+        this.students.forEach((student) => {
+            console.log(`${student.name}'s enrolled courses:`);
+            student.displayCourses();
+        });
+    }
+    
     async addStudentFromPrompt(): Promise<void> {
         const { name } = await inquirer.prompt({
             name: 'name',
@@ -97,6 +104,7 @@ class StudentManagementSystem {
         }
     }
 
+    
     async enrollStudentFromPrompt(): Promise<void> {
             const studentChoices = this.students.map((student) => ({
                 name: student.name,
@@ -134,7 +142,7 @@ async function main(): Promise<void> {
             name: 'action',
             type: 'list',
             message: 'Choose an action:',
-            choices: ['Add Student', 'Add Course', 'Enroll Student', 'Display Students', 'Display Courses', 'Quit'],
+            choices: ['Add Student', 'Add Course', 'Enroll Student', 'Display Students', 'Display Courses', 'Display Enrolled Student in Courses', 'Quit'],
         });
 
         switch (choice.action) {
@@ -147,11 +155,17 @@ async function main(): Promise<void> {
             case 'Enroll Student':
                 await studentSystem.enrollStudentFromPrompt();
                 break;
+            case 'Enrolled Student in Courses':
+                await studentSystem.enrollStudentFromPrompt;
+                break;
             case 'Display Students':
                 studentSystem.displayStudents();
                 break;
             case 'Display Courses':
                 studentSystem.displayCourses();
+                break;
+            case 'Display Enrolled Student in Courses':
+                studentSystem.displayEnrolledStudents();
                 break;
             case 'Quit':
                 console.log('Goodbye!');

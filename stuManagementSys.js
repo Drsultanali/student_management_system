@@ -10,13 +10,13 @@ class Student {
     }
     enroll(course) {
         this.enrolledCourses.push(course);
-        console.log(`${this.name} is enrolled in ${course.name}.`);
+        // console.log(`${this.name} is enrolled in ${course.name}.`);
     }
     displayCourses() {
         if (this.enrolledCourses.length > 0) {
-            console.log(`${this.name}'s enrolled courses:`);
+            //console.log(`${this.name}'s enrolled courses:`);
             this.enrolledCourses.forEach((course) => {
-                console.log(`- ${course.name}`);
+                console.log(` ${course.name}`);
             });
         }
         else {
@@ -53,6 +53,13 @@ class StudentManagementSystem {
         console.log('List of Courses:');
         this.courses.forEach((course) => {
             console.log(`Course: ${course.name}`);
+        });
+    }
+    displayEnrolledStudents() {
+        console.log('List of Enrolled Students:');
+        this.students.forEach((student) => {
+            console.log(`${student.name}'s enrolled courses:`);
+            student.displayCourses();
         });
     }
     async addStudentFromPrompt() {
@@ -112,7 +119,7 @@ async function main() {
             name: 'action',
             type: 'list',
             message: 'Choose an action:',
-            choices: ['Add Student', 'Add Course', 'Enroll Student', 'Display Students', 'Display Courses', 'Quit'],
+            choices: ['Add Student', 'Add Course', 'Enroll Student', 'Display Students', 'Display Courses', 'Display Enrolled Student in Courses', 'Quit'],
         });
         switch (choice.action) {
             case 'Add Student':
@@ -124,11 +131,17 @@ async function main() {
             case 'Enroll Student':
                 await studentSystem.enrollStudentFromPrompt();
                 break;
+            case 'Enrolled Student in Courses':
+                await studentSystem.enrollStudentFromPrompt;
+                break;
             case 'Display Students':
                 studentSystem.displayStudents();
                 break;
             case 'Display Courses':
                 studentSystem.displayCourses();
+                break;
+            case 'Display Enrolled Student in Courses':
+                studentSystem.displayEnrolledStudents();
                 break;
             case 'Quit':
                 console.log('Goodbye!');
